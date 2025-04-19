@@ -28,31 +28,37 @@ class TemperatureSensor(Sensor):
         Jeśli nie wykonano jeszcze odczytu, wykonuje go najpierw.
         """
         if self.last_value is None:
-            self.read_value()
+            self.generate()
 
         multiplier  = None
 
         match timeOfDay:
             case 'dawn':
-                multiplier  = 0.8
+                if self.last_value < 0:
+                    multiplier = 1.2
+                else:
+                    multiplier = 0.8
             case 'noon':
                 multiplier  = 1.2
             case 'dusk':
                 multiplier  = 1
             case 'night':
-                multiplier  = 0
+                if self.last_value < 0:
+                    multiplier = 1.3
+                else:
+                    multiplier = 0.7
 
         self.last_value *= multiplier
         return self.last_value
 
-a = TemperatureSensor(1)
+temperature = TemperatureSensor(1)
 
-a.settingSeason('spring')
-a.calibrate('dawn')
-a.read_value()
+temperature.settingSeason('spring')
+temperature.generate()
+temperature.calibrate('dawn')
 
-print(f"Min: {a.min_value}, Max: {a.max_value}")
-print(f"Generated value: {a.last_value:.2f}{a.unit}" )
+print(f"Min: {temperature.min_value}, Max: {temperature.max_value}")
+print(f"Generated value: {temperature.last_value:.2f}{temperature.unit}")
 
 
 

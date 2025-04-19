@@ -22,7 +22,7 @@ class Sensor:
         self.active = True
         self.last_value = None
 
-    def read_value(self):
+    def generate(self):
         """
         Symuluje pobranie odczytu z czujnika.
         W klasie bazowej zwraca losową wartość z przedziału [min_value, max_value].
@@ -40,7 +40,7 @@ class Sensor:
         Jeśli nie wykonano jeszcze odczytu, wykonuje go najpierw.
         """
         if self.last_value is None:
-            self.read_value()
+            self.generate()
 
         self.last_value *= calibration_factor
         return self.last_value
@@ -50,7 +50,7 @@ class Sensor:
         Zwraca ostatnią wygenerowaną wartość, jeśli była wygenerowana.
         """
         if self.last_value is None:
-            return self.read_value()
+            return self.generate()
         return self.last_value
 
     def start(self):

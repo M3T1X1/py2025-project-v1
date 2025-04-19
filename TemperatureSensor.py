@@ -1,5 +1,3 @@
-import random
-
 from Sensor import Sensor
 
 class TemperatureSensor(Sensor):
@@ -24,14 +22,37 @@ class TemperatureSensor(Sensor):
                 raise ValueError
         print(f"The temperature sensor has been set to {season}.")
 
+    def calibrate(self, timeOfDay): #timeOfDay = dawn, noon, dusk, night
+        """
+        Kalibruje ostatni odczyt przez przemnożenie go przez calibration_factor.
+        Jeśli nie wykonano jeszcze odczytu, wykonuje go najpierw.
+        """
+        if self.last_value is None:
+            self.read_value()
+
+        multiplier  = None
+
+        match timeOfDay:
+            case 'dawn':
+                multiplier  = 0.8
+            case 'noon':
+                multiplier  = 1.2
+            case 'dusk':
+                multiplier  = 1
+            case 'night':
+                multiplier  = 0
+
+        self.last_value *= multiplier
+        return self.last_value
+
 a = TemperatureSensor(1)
 
 a.settingSeason('spring')
 a.calibrate('dawn')
 a.read_value()
 
-print(f"Min: {a.min_value:.2f}, Max: {a.max_value:.2f}")
-print(f"Wartość wygenerowana: {a.last_value:.2f}")
+print(f"Min: {a.min_value}, Max: {a.max_value}")
+print(f"Generated value: {a.last_value:.2f}{a.unit}" )
 
 
 

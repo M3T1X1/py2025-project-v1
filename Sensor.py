@@ -34,7 +34,7 @@ class Sensor:
         self.last_value = value
         return value
 
-    def calibrate(self, timeOfDay): #timeOfDay = dawn, noon, dusk, night
+    def calibrate(self, calibration_factor):
         """
         Kalibruje ostatni odczyt przez przemnożenie go przez calibration_factor.
         Jeśli nie wykonano jeszcze odczytu, wykonuje go najpierw.
@@ -42,19 +42,7 @@ class Sensor:
         if self.last_value is None:
             self.read_value()
 
-        multiplier  = None
-
-        match timeOfDay:
-            case 'dawn':
-                multiplier  = 0.8
-            case 'noon':
-                multiplier  = 1.2
-            case 'dusk':
-                multiplier  = 1
-            case 'night':
-                multiplier  = 0
-
-        self.last_value *= multiplier
+        self.last_value *= calibration_factor
         return self.last_value
 
     def get_last_value(self):

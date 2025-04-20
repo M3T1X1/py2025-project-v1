@@ -23,10 +23,6 @@ class TemperatureSensor(Sensor):
         print(f"The temperature sensor has been set to {season}.")
 
     def calibrate(self, timeOfDay): #timeOfDay = dawn, noon, dusk, night
-        """
-        Kalibruje ostatni odczyt przez przemnożenie go przez calibration_factor.
-        Jeśli nie wykonano jeszcze odczytu, wykonuje go najpierw.
-        """
         if self.last_value is None:
             self.generate()
 

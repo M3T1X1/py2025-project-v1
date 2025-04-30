@@ -30,7 +30,3 @@ class HumiditySensor(Sensor):
 
 
 humidity = HumiditySensor(3)
-humidity.severityChecker(False,'Severe')
-humidity.generate()
-
-print(f"Generated value: {humidity.last_value:.02f} {humidity.unit}")

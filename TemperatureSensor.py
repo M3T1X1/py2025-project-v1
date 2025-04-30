@@ -21,40 +21,30 @@ class TemperatureSensor(Sensor):
             case _:
                 raise ValueError
         print(f"The temperature sensor has been set to {season}.")
-
-    def calibrate(self, timeOfDay): #timeOfDay = dawn, noon, dusk, night
-        if self.last_value is None:
-            self.generate()
-
-        multiplier  = None
-
-        match timeOfDay:
-            case 'dawn':
-                if self.last_value < 0:
-                    multiplier = 1.2
-                else:
-                    multiplier = 0.8
-            case 'noon':
-                multiplier  = 1.2
-            case 'dusk':
-                multiplier  = 1
-            case 'night':
-                if self.last_value < 0:
-                    multiplier = 1.3
-                else:
-                    multiplier = 0.7
-
-        self.last_value *= multiplier
-        return self.last_value
-
+    """
+     def calibrate(self, timeOfDay): #timeOfDay = dawn, noon, dusk, night
+            if self.last_value is None:
+                self.generate()
+    
+            multiplier  = None
+    
+            match timeOfDay:
+                case 'dawn':
+                    if self.last_value < 0:
+                        multiplier = 1.2
+                    else:
+                        multiplier = 0.8
+                case 'noon':
+                    multiplier  = 1.2
+                case 'dusk':
+                    multiplier  = 1
+                case 'night':
+                    if self.last_value < 0:
+                        multiplier = 1.3
+                    else:
+                        multiplier = 0.7
+    
+            self.last_value *= multiplier
+            return self.last_value
+    """
 temperature = TemperatureSensor(1)
-
-temperature.settingSeason('spring')
-temperature.generate()
-temperature.calibrate('dawn')
-
-print(f"Min: {temperature.min_value}, Max: {temperature.max_value}")
-print(f"Generated value: {temperature.last_value:.2f}{temperature.unit}")
-
-
-

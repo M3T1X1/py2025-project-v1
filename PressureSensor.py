@@ -14,13 +14,12 @@ class PressureSensor(Sensor):
                 self.min_value = 960
                 self.max_value = 1050
             case _:
-                raise ValueError("")
+                raise ValueError("Enter correct value!")
 
 
 pressure = PressureSensor(2)
 
-pressure.settingClimate('plains')
-pressure.generate()
-pressure.calibrate(3)
 
-print(f"Generated value: {pressure.last_value:.02f} {pressure.unit}")
+
+
+

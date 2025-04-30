@@ -1,3 +1,5 @@
+from barcode import generate
+
 from Sensor import Sensor
 
 class AirQualitySensor(Sensor):
@@ -29,8 +31,4 @@ class AirQualitySensor(Sensor):
                 self.min_value = max(0, AQI-20)
                 self.max_value = min(500, AQI+20)
 
-a = AirQualitySensor(4)
-a.calculateAQI(351)
-
-print(f"MIN: {a.min_value}")
-print(f"MAX: {a.max_value}")
+airQuality = AirQualitySensor(4)

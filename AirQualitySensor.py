@@ -1,5 +1,3 @@
-from barcode import generate
-
 from Sensor import Sensor
 
 class AirQualitySensor(Sensor):

@@ -1,5 +1,10 @@
 import random
 import time
+from datetime import datetime
+
+from fontTools.merge.util import current_time
+from nbclient.client import timestamp
+
 
 class Sensor:
     def __init__(self, sensor_id, name, unit, min_value, max_value, frequency=1):
@@ -21,6 +26,16 @@ class Sensor:
         self.frequency = frequency
         self.active = True
         self.last_value = None
+        self._callback = []
+
+    def register_callback(self, callback):
+        self._callback.append(callback)
+
+    def callback_notification(self, value):
+        time = datetime.now()
+        for callback in self._callback:
+            callback(self.sensor_id, time, value, self.unit)
+
 
     def generate(self):
         """

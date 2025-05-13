@@ -47,6 +47,9 @@ class Sensor:
 
         value = random.uniform(self.min_value, self.max_value)
         self.last_value = value
+
+        self.callback_notification(value)
+
         return value
 
     def calibrate(self, calibration_factor):

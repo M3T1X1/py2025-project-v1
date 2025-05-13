@@ -46,7 +46,8 @@ class Logger:
 
         self.last_rotation_time = datetime.now()
         # Zliczanie istniejących linii w pliku (poza nagłówkiem)
-        self.current_line_count = sum(1 for _ in open(self.current_filename)) - 1
+        with open(self.current_filename, 'r', encoding='utf-8') as f:
+            self.current_line_count = sum(1 for _ in f) - 1
 
     def stop(self): # Zatrzymanie logowania – zapisanie bufora i zamknięcie pliku
         self._flush()

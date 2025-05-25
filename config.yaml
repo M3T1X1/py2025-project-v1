@@ -1,8 +1,11 @@
 client:
   host: "127.0.0.1"
   port: 9000
-  timeout: 5.0         
-  retries: 3           
+  timeout: 5.0
+  retries: 3
+  log_path: "../logs"
 
 server:
   port: 9000
+  host: 0.0.0.0
+  log_path: "../logs"

@@ -2,7 +2,6 @@ import socket
 import json
 import os
 import threading
-
 import yaml
 from datetime import datetime
 from logger import Logger  # zakładam, że Logger masz w osobnym pliku logger.py

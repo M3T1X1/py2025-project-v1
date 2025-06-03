@@ -6,6 +6,7 @@ import json
 import yaml
 from datetime import datetime, timedelta
 from collections import defaultdict, deque
+from logger import Logger
 import socket
 import sys
 import os
@@ -264,22 +265,24 @@ class ServerGUI:
             print(f"Błąd serwera: {e}")
 
     def handle_client(self, client_socket, address):
-        """Obsługuje połączenie z klientem"""
+        logger = None  # Inicjalizacja zmiennej
         try:
+            # Inicjalizuj Logger z poprawną ścieżką
+            logger = Logger(config_path="config.json")  # <-- TU BYŁ BŁĄD
+            logger.start()
+
             while self.is_running:
                 data = client_socket.recv(1024).decode('utf-8')
                 if not data:
                     break
 
-                # Parsuj dane JSON
                 for line in data.strip().split('\n'):
                     if line:
                         try:
                             sensor_data = json.loads(line)
+                            timestamp = datetime.fromisoformat(sensor_data['timestamp'])
 
-                            # Dodaj odczyt do menedżera danych
-                            timestamp = datetime.fromisoformat(sensor_data['timestamp'].replace('Z', '+00:00'))
-
+                            # Aktualizuj GUI
                             self.data_manager.add_reading(
                                 sensor_data['sensor_id'],
                                 sensor_data['value'],
@@ -287,19 +290,24 @@ class ServerGUI:
                                 timestamp
                             )
 
-                            # Wyślij potwierdzenie
-                            client_socket.send(b'ACK\n')
+                            # Zapisz do pliku CSV
+                            logger.log_reading(
+                                timestamp=timestamp,
+                                sensor_id=sensor_data['sensor_id'],
+                                value=sensor_data['value'],
+                                unit=sensor_data['unit']
+                            )
 
-                        except json.JSONDecodeError as e:
-                            print(f"Błąd parsowania JSON: {e}")
+                            client_socket.send(b'ACK\n')
                         except Exception as e:
                             print(f"Błąd przetwarzania danych: {e}")
 
         except Exception as e:
             print(f"Błąd obsługi klienta {address}: {e}")
         finally:
+            if logger:  # <-- WAŻNE: sprawdź czy logger istnieje
+                logger.stop()
             client_socket.close()
-            self.status_bar.set_text(f"Rozłączono z {address}")
 
     def stop_server(self):
         """Zatrzymuje serwer"""

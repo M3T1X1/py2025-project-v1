@@ -25,7 +25,7 @@ class NetworkClient:
             client_cfg = {}
 
         self.host = client_cfg.get("host", "127.0.0.1")
-        self.port = client_cfg.get("port", 9999)
+        self.port = client_cfg.get("port", 9000)
         self.timeout = client_cfg.get("timeout", 5.0)
         self.retries = client_cfg.get("retries", 3)
 

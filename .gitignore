@@ -1,0 +1,19 @@
+# Pliki i foldery Pythona
+__pycache__/
+*.py[cod]
+*.pyd
+
+# Pliki IDE
+.idea/
+.vscode/
+
+# Logi i pliki tymczasowe
+logs/
+*.log
+*.tmp
+
+# Pliki środowiskowe
+.env
+
+# Systemowe
+.DS_Store

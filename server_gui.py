@@ -122,7 +122,7 @@ class ServerGUI:
 
         # Port
         tk.Label(top_frame, text="Port:").pack(side=tk.LEFT)
-        self.port_var = tk.StringVar(value=str(self.config.get('port', 9999)))
+        self.port_var = tk.StringVar(value=str(self.config.get('port', 9000)))
         self.port_entry = tk.Entry(top_frame, textvariable=self.port_var, width=10)
         self.port_entry.pack(side=tk.LEFT, padx=5)
 
@@ -169,8 +169,8 @@ class ServerGUI:
     def load_config(self):
         """Wczytuje konfigurację z pliku"""
         default_config = {
-            'port': 9999,
-            'update_interval': 3
+            'port': 9000,
+            'update_interval': 1
         }
 
         try:

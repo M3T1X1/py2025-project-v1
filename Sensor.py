@@ -2,10 +2,6 @@ import random
 import time
 from datetime import datetime
 
-from fontTools.merge.util import current_time
-from nbclient.client import timestamp
-
-
 class Sensor:
     def __init__(self, sensor_id, name, unit, min_value, max_value, frequency=1):
         """
